@@ -1,58 +1,29 @@
-<!--EXTERNAL_PROPERTIES: TargetFramework-->
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configurations>Debug;Release</Configurations>
     <TargetFrameworks>net20;net30;net35;net40;net45;net46;net461;net47;net471;net472;net48;netcoreapp1.0;netcoreapp1.1;netcoreapp2.0;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net5.0;netstandard1.0;netstandard1.1;netstandard1.2;netstandard1.3;netstandard1.4;netstandard1.5;netstandard1.6;netstandard2.0;netstandard2.1</TargetFrameworks>
     <ProjectGuid>{B5078871-4299-49ED-B921-3B5EBE57336A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Theraot.Core</RootNamespace>
     <AssemblyName>Theraot.Core</AssemblyName>
-    <FileAlignment>512</FileAlignment>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>OpenSourceKey.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>4.0.0</Version>
-    <Authors>Theraot</Authors>
-    <Company>Theraot</Company>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/theraot/Theraot/</PackageProjectUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!--
+    CS1591: Missing XML comment for publicly visible type or member 'Type_or_Member'
+    -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet props">
+    <IsPackable>true</IsPackable>
     <Description>Theraot.Core is a .NET Backport (ValueTask, ValueTuple, Task, Expressions, Linq, ThreadLocal, IsExternalInit, Range, Index, etc...) for .NET Framework. .NET Core, .NET Standard</Description>
     <PackageTags>Backport Polyfill Bridge ValueTask ValueTuple Async Task Linq Expressions ThreadLocal IAsyncEnumerable IReadOnlySet IsExternalInit Range Index</PackageTags>
-    <Copyright>Copyright 2021</Copyright>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/theraot/Theraot/</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <CodeAnalysisRuleSet>../rules.ruleset</CodeAnalysisRuleSet>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <FileVersion>4.0.0.0</FileVersion>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <LangVersion>9.0</LangVersion>
-    <Nullable>enable</Nullable>
-    <NullableContextOptions>enable</NullableContextOptions>
-    <PackageIcon>icon.png</PackageIcon>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <CheckEolTargetFramework>false</CheckEolTargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>False</Optimize>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>False</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>true</Optimize>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>False</Prefer32Bit>
-  </PropertyGroup>
+
+  <Import Project=".\*.analyzers.csproj" Condition="'$(Configuration)'=='Debug'" />
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
     <DefineConstants>TARGETS_NET;GREATERTHAN_NET472;GREATERTHAN_NET471;GREATERTHAN_NET47;GREATERTHAN_NET462;GREATERTHAN_NET461;GREATERTHAN_NET46;GREATERTHAN_NET45;GREATERTHAN_NET40;GREATERTHAN_NET35;GREATERTHAN_NET30;GREATERTHAN_NET20</DefineConstants>
   </PropertyGroup>
@@ -146,18 +117,12 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
     <DefineConstants>TARGETS_NETCORE;LESSTHAN_NET60;LESSTHAN_NET50;LESSTHAN_NETCOREAPP31;LESSTHAN_NETCOREAPP30;LESSTHAN_NETCOREAPP22;LESSTHAN_NETCOREAPP21;LESSTHAN_NETCOREAPP20;LESSTHAN_NETCOREAPP11</DefineConstants>
   </PropertyGroup>
+
   <ItemGroup>
-    <Compile Remove="obj\**" />
-    <EmbeddedResource Remove="obj\**" />
-    <None Remove="obj\**" />
-  </ItemGroup>
-  <ItemGroup>
+    <!-- T4 templating -->
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>
-  <Import Project=".\*.analyzers.csproj" Condition="'$(Configuration)'=='Debug'" />
+
   <ItemGroup>
     <None Update="Theraot\Core\ActionHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -166,10 +131,6 @@
     <None Update="Theraot\Core\FuncHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FuncHelper.cs</LastGenOutput>
-    </None>
-    <None Include="..\icon.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +145,7 @@
       <DependentUpon>FuncHelper.tt</DependentUpon>
     </Compile>
   </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net30'">

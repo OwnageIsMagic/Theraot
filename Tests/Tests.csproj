@@ -1,42 +1,27 @@
-﻿<!--EXTERNAL_PROPERTIES: TargetFramework-->
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configurations>Debug;Release</Configurations>
     <TargetFrameworks>net20;net30;net35;net40;net45;net46;net461;net47;net471;net472;net48;netcoreapp1.0;netcoreapp1.1;netcoreapp2.0;netcoreapp2.1;netcoreapp2.2;netcoreapp3.0;netcoreapp3.1;net5.0;netstandard1.3;netstandard1.4;netstandard1.5;netstandard1.6;netstandard2.0;netstandard2.1</TargetFrameworks>
     <ProjectGuid>{F4C29B9E-2C6A-4556-9B90-A15841FF6F78}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tests</RootNamespace>
     <AssemblyName>Tests</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <SignAssembly>False</SignAssembly>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <CodeAnalysisRuleSet>../rules.ruleset</CodeAnalysisRuleSet>
-    <NoWarn>1701;1702;NU1701;NU1702;SYSLIB0003;SYSLIB0004;SYSLIB0011</NoWarn>
-    <SonarQubeExclude>True</SonarQubeExclude>
+    <!--
+    NU1701: Package '...' was restored using 'TargetFrameworkA' instead the project target framework 'TargetFrameworkB'. This package may not be fully compatible with your project.
+    NU1702: ProjectReference '...' was resolved using 'TargetFrameworkA' instead of the project target framework 'TargetFrameworkB'. This project may not be fully compatible with your project.
+    SYSLIB0003: Code access security is not supported
+    SYSLIB0004: The constrained execution region (CER) feature is not supported
+    SYSLIB0011: BinaryFormatter serialization is obsolete
+    -->
+    <NoWarn>$(NoWarn);NU1701;SYSLIB0003;SYSLIB0004;SYSLIB0011</NoWarn>
+
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    <SonarQubeExclude>True</SonarQubeExclude>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
-    <LangVersion>9.0</LangVersion>
     <AnalysisLevel>none</AnalysisLevel>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
-    <CheckEolTargetFramework>false</CheckEolTargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DebugSymbols>True</DebugSymbols>
-    <DebugType>Full</DebugType>
-    <Optimize>False</Optimize>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>False</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugSymbols>True</DebugSymbols>
-    <Optimize>True</Optimize>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>False</Prefer32Bit>
-  </PropertyGroup>
+
   <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
     <DefineConstants>TARGETS_NET;GREATERTHAN_NET472;GREATERTHAN_NET471;GREATERTHAN_NET47;GREATERTHAN_NET462;GREATERTHAN_NET461;GREATERTHAN_NET46;GREATERTHAN_NET45;GREATERTHAN_NET40;GREATERTHAN_NET35;GREATERTHAN_NET30;GREATERTHAN_NET20</DefineConstants>
   </PropertyGroup>
@@ -130,6 +115,7 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp1.0'">
     <DefineConstants>TARGETS_NETCORE;LESSTHAN_NET60;LESSTHAN_NET50;LESSTHAN_NETCOREAPP31;LESSTHAN_NETCOREAPP30;LESSTHAN_NETCOREAPP22;LESSTHAN_NETCOREAPP21;LESSTHAN_NETCOREAPP20;LESSTHAN_NETCOREAPP11</DefineConstants>
   </PropertyGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
     <PackageReference Include="NUnit" Version="[3.9.0]" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
@@ -1208,9 +1194,7 @@
     <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Framework.Core\Framework.Core.csproj" />
   </ItemGroup>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <PropertyGroup>
+    <!-- tooling lang -->
+    <PreferredUILang>en</PreferredUILang>
+
+    <!-- for Condition="$(true)" instead of Condition="'$(true)' == 'true'" -->
+    <false>$([System.Convert]::ToBoolean(false))</false>
+    <true>$([System.Convert]::ToBoolean(true))</true>
+
+    <IsSolutionBuild>$(false)</IsSolutionBuild>
+    <IsSolutionBuild Condition="'$(SolutionDir)' != ''">$(true)</IsSolutionBuild>
+    <!-- Defined only when building a solution in the IDE -->
+    <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- only certain projects are packed -->
+    <!-- see also IsPublishable -->
+    <IsPackable>false</IsPackable>
+    <WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
+    <WarnOnPackingNonPackableProject Condition="$(IsSolutionBuild)">false</WarnOnPackingNonPackableProject>
+
+    <LangVersion>latest</LangVersion>
+    <Nullable>annotations</Nullable>
+    <!-- <WarningsAsErrors>nullable</WarningsAsErrors> -->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <!-- TODO: is it needed? <PathMap>$(EnlistmentRoot)=C:\</PathMap> -->
+  </PropertyGroup>
+
+  <PropertyGroup Label="Analyzers">
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)rules.ruleset</CodeAnalysisRuleSet>
+    <!-- for Microsoft.CodeAnalysis.NetAnalyzers in netfx -->
+    <EnableNETAnalyzers>false</EnableNETAnalyzers>
+    <AnalysisLevel>none</AnalysisLevel>
+    <AnalysisMode>All</AnalysisMode>
+    <!-- Package 'Microsoft.NETCore.App' 1.0.5 has a known high severity vulnerability , etc -->
+    <NuGetAudit>false</NuGetAudit>
+    <!-- <NuGetAuditMode>all</NuGetAuditMode> -->
+    <!-- <NuGetAuditLevel>high</NuGetAuditLevel> -->
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <!--<ApiCompatValidateAssemblies>true</ApiCompatValidateAssemblies>-->
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet props">
+    <Authors>Theraot</Authors>
+    <Company>Theraot</Company>
+    <Copyright>Copyright 2024</Copyright>
+
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/theraot/Theraot/</PackageProjectUrl>
+
+    <!-- SourceLink -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup Label="NuGet items">
+    <None Include="$(MSBuildThisFileDirectory)icon.png" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+</Project>
