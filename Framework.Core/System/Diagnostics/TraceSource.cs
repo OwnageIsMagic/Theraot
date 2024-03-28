@@ -1,4 +1,4 @@
-﻿#if LESSTHAN_NETSTANDARD20
+﻿#if NETSTANDARD && !NETSTANDARD1_3_OR_GREATER
 
 namespace System.Diagnostics
 {

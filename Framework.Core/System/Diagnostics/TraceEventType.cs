@@ -1,4 +1,4 @@
-﻿#if LESSTHAN_NETSTANDARD20
+﻿#if NETSTANDARD && !NETSTANDARD1_3_OR_GREATER
 
 #pragma warning disable CA1008 // Enums should have zero value
 #pragma warning disable CA1027 // Mark enums with FlagsAttribute
