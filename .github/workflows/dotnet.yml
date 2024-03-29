@@ -12,9 +12,9 @@ on:
 jobs:
   build:
 
-    strategy:
-      matrix:
-        configuration: [Debug, Release]
+    # strategy:
+    #   matrix:
+    #     configuration: [Debug, Release]
 
     runs-on: windows-latest
     # env:
@@ -37,14 +37,15 @@ jobs:
     #   run: '& "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --config .vsconfig --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"'
 
     - name: Restore dependencies
-      run: msbuild /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      run: msbuild /t:Restore
 
-    - name: Build
-      run: msbuild /t:Build /p:RestorePackages=false /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+    - name: Build Debug
+      run: msbuild /t:Build,Pack /p:Configuration=Debug
+      # env:
+      #   Configuration: ${{ matrix.configuration }}
+    - name: Build Release
+      run: msbuild /t:Build,Pack /p:Configuration=Release
+
 
 # dotnet SDK can't find net30
 # error MSB3644: The reference assemblies for .NETFramework,Version=v3.0 were not found.
