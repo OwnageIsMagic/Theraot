@@ -26,12 +26,13 @@
     <Nullable>annotations</Nullable>
     <!-- <WarningsAsErrors>nullable</WarningsAsErrors> -->
     <!--<ImplicitUsings>enable</ImplicitUsings>-->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-    <!-- TODO: is it needed? <PathMap>$(EnlistmentRoot)=C:\</PathMap> -->
+    <RestoreLockedMode>true</RestoreLockedMode>
   </PropertyGroup>
 
   <PropertyGroup Label="Analyzers">
