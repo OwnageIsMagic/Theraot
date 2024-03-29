@@ -12,8 +12,14 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
 
+    runs-on: windows-latest
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+  
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -21,11 +27,29 @@ jobs:
         fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      # with:
+      #   cache: true
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    # - name: Install targeting packs
+    #   run: '& "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\setup.exe" modify --quiet --config .vsconfig --installPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"'
+
     - name: Restore dependencies
-      run: dotnet restore
+      run: msbuild /t:Restore /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
     - name: Build
-      run: dotnet build --no-restore
+      run: msbuild /t:Build /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+# dotnet SDK can't find net30
+# error MSB3644: The reference assemblies for .NETFramework,Version=v3.0 were not found.
+    # - name: Restore dependencies
+    #   run: dotnet restore
+    # - name: Build
+    #   run: dotnet build --no-restore
     # - name: Test
     #   run: dotnet test --no-build --verbosity normal
