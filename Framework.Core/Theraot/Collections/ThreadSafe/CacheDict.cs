@@ -29,6 +29,7 @@ namespace Theraot.Collections.ThreadSafe
         /// <summary>
         ///     Creates a dictionary-like object used for caches.
         /// </summary>
+        /// <param name="valueFactory">Value factory.</param>
         /// <param name="capacity">The maximum number of elements to store will be this number aligned to next ^2.</param>
         public CacheDict(Func<TKey, TValue> valueFactory, int capacity)
         {

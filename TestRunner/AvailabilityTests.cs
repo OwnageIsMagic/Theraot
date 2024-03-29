@@ -1,4 +1,6 @@
 ﻿#pragma warning disable 618
+#pragma warning disable SYSLIB0003
+#pragma warning disable SYSLIB0004
 
 // ReSharper disable StyleCop.SA1512
 // ReSharper disable StyleCop.SA1515

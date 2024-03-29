@@ -50,13 +50,8 @@ namespace System.Threading.Tasks
             return new ConfiguredTaskAwaitable<TResult>(this, continueOnCapturedContext);
         }
 
-        /// <summary>
-        ///     Gets an awaiter used to await this <see cref="Task" />.
-        /// </summary>
-        /// <typeparam name="TResult">Specifies the type of data returned by the task.</typeparam>
-        /// <returns>
-        ///     An awaiter instance.
-        /// </returns>
+        /// <summary>Gets an awaiter used to await this <see cref="Task{TResult}"/>.</summary>
+        /// <returns>An awaiter instance.</returns>
         public new TaskAwaiter<TResult> GetAwaiter()
         {
             return new TaskAwaiter<TResult>(this);
