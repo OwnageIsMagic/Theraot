@@ -17,8 +17,8 @@ jobs:
         configuration: [Debug, Release]
 
     runs-on: windows-latest
-    env:
-      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+    # env:
+    #   NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
   
     steps:
     - name: Checkout
@@ -27,9 +27,9 @@ jobs:
         fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
-      with:
-        cache: true
-        cache-dependency-path: '*/packages.lock.json'
+      # with:
+      #   cache: true
+      #   cache-dependency-path: '*/packages.lock.json'
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
 
