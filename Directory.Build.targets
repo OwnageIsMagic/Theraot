@@ -6,8 +6,8 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Using Remove="System.Net.Http" />
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>
